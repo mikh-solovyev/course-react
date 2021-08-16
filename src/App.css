@@ -57,6 +57,8 @@ body {
     background: none;
     color: #1473e6;
     cursor: pointer;
+    text-decoration: none;
+    padding-left: 5px;
 }
 
 .form__field {

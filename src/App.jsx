@@ -18,6 +18,13 @@ class App extends React.Component {
     this.setState({currentPage: page})
   }
 
+  PAGES = {
+    login: <Login changePage={this.changePage} currentPage={this.state.currentPage}/>,
+    registration: <Registration changePage={this.changePage} currentPage={this.state.currentPage}/>,
+    map: <Map/>,
+    profile: <Profile/>
+  }
+
   render() {
     if(["login", "registration"].includes(this.state.currentPage )) {
       return <>
@@ -41,14 +48,6 @@ class App extends React.Component {
       </>
     }
   }
-
-  PAGES = {
-    login: <Login changePage={this.changePage} currentPage={this.state.currentPage}/>,
-    registration: <Registration changePage={this.changePage} currentPage={this.state.currentPage}/>,
-    map: <Map/>,
-    profile: <Profile/>
-  }
-
 }
 
 export default App;

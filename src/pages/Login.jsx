@@ -22,7 +22,7 @@ class Login extends React.Component {
                             <div className="form__title">Войти</div>
                             <div className="form__subtitle">
                                 Новый пользователь?
-                                <button onClick={() => this.props.changePage("registration")} className="form__link">Зарегистрируейтесь</button>
+                                <a href="#" onClick={() => this.props.changePage("registration")} className="form__link">Зарегистрируейтесь</a>
                             </div>
 
                             <div className="form__field">

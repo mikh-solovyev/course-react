@@ -23,7 +23,7 @@ class Registration extends React.Component {
                             <div className="form__title">Регистрация</div>
                             <div className="form__subtitle">
                                 Уже зарегистрирован?
-                                <button onClick={() => this.props.changePage("login")} className="form__link">Войти</button>
+                                <a href="#" onClick={() => this.props.changePage("login")} className="form__link">Войти</a>
                             </div>
 
                             <div className="form__field">
