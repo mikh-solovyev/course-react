@@ -1,11 +1,15 @@
 import React from "react";
 import logoWhite from "../../assets/logoWhite.png";
 import logoDark from "../../assets/logoDark.png";
+import PropTypes from 'prop-types';
 
 class Logo extends React.Component {
 
+    static propTypes = {
+        currentPage: PropTypes.string
+    }
+
     getTheme() {
-        console.log(this.props.currentPage)
         return (["login", "registration"].includes(this.props.currentPage)) ? logoWhite : logoDark;
     }
 

@@ -1,11 +1,31 @@
 import React from "react";
 import Logo from "../components/Logo/Logo";
+import {withAuth} from "../AuthContext";
+import PropTypes from 'prop-types';
+import Button from "../components/Button/Button";
+import FormField from "../components/FormField/FormField"
 
 class Login extends React.Component {
 
-    onFormSubmit = (e) => {
-        e.preventDefault();
-        this.props.changePage("map");
+    static propTypes = {
+        isLoggedIn: PropTypes.bool,
+        login: PropTypes.func,
+        changePage: PropTypes.func,
+        currentPage: PropTypes.string
+    }
+
+    changePage = (page) => {
+        this.props.changePage(page);
+    }
+
+    authenticate = async (event) => {
+        event.preventDefault();
+        const {login, password} = event.target;
+        await this.props.logIn(login.value, password.value);
+
+        if(this.props.isLoggedIn) {
+            this.changePage("map");
+        }
     }
 
     render() {
@@ -18,25 +38,27 @@ class Login extends React.Component {
                         </div>
                     </div>
                     <div className="col">
-                        <form method="post" className="login__form form" onSubmit={(e) => this.onFormSubmit(e)}>
+                        <form method="post" className="login__form form" onSubmit={this.authenticate}>
                             <div className="form__title">Войти</div>
                             <div className="form__subtitle">
                                 Новый пользователь?
-                                <a href="#" onClick={() => this.props.changePage("registration")} className="form__link">Зарегистрируейтесь</a>
+                                <a href="#" onClick={() => this.changePage("registration")} className="form__link">Зарегистрируейтесь</a>
                             </div>
 
-                            <div className="form__field">
-                                <label htmlFor="name">Имя пользователя*</label>
-                                <input id="name" className="form__input" type="text" name="name"/>
-                            </div>
+                            <FormField options={{
+                                name: "login",
+                                label: "Имя пользователя*",
+                                type: "text"
+                            }}/>
 
-                            <div className="form__field">
-                                <label htmlFor="password">Пароль*</label>
-                                <input id="password" className="form__input" type="password" name="password"/>
-                            </div>
+                            <FormField options={{
+                                name: "password",
+                                label: "Пароль*",
+                                type: "password"
+                            }}/>
 
                             <div className="form__btn">
-                                <button type="submit" className="btn">Войти</button>
+                                <Button text="Войти"/>
                             </div>
 
                         </form>
@@ -47,4 +69,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export const LoginWithAuth = withAuth(Login);
