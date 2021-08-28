@@ -1,0 +1,32 @@
+.form__field {
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    color: #505050;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.form__field .row {
+    justify-content: space-between;
+}
+
+.form__field .col {
+    width: calc(50% - 20px);
+}
+
+.form__field:last-child {
+    margin-bottom: 0;
+}
+
+.form__input {
+    border: none;
+    border-bottom: 1px solid #505050;
+    padding: 5px 0;
+    width: 100%;
+}
+
+.form__input:focus {
+    outline: none;
+    border-bottom-color: #1473e6;
+}
