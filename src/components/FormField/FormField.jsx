@@ -14,7 +14,7 @@ class FormField extends React.Component {
             label: PropTypes.string,
             name: PropTypes.string,
             type: PropTypes.string,
-            class: PropTypes.string,
+            className: PropTypes.string,
             placeholder: PropTypes.string
         })
     }
@@ -24,14 +24,14 @@ class FormField extends React.Component {
             label: "Название поля",
             name: "name",
             type: "text",
-            class: "",
+            className: "",
             placeholder: "",
         }
     }
 
     render() {
         return (
-            <div className={`form__field ${this.props.options.class || ""}`}>
+            <div className={`form__field ${this.props.options.className || ""}`}>
                 <label htmlFor={this.props.options.name}>
                     {this.props.options.label}
                     {this.props.options.attention ? <HtmlAttention/> : ""}

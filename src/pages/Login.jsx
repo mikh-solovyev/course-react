@@ -58,7 +58,7 @@ class Login extends React.Component {
                             }}/>
 
                             <div className="form__btn">
-                                <Button text="Войти"/>
+                                <Button children="Войти"/>
                             </div>
 
                         </form>

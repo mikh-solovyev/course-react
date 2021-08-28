@@ -1,32 +1,15 @@
 import React from "react";
-import mapboxgl from 'mapbox-gl';
 import {withAuth} from "../AuthContext";
 import McLogo from "../components/McLogo/McLogo";
 import Button from "../components/Button/Button";
 import FormField from "../components/FormField/FormField";
 
 class Profile extends React.Component {
-    map = null;
-    mapContainer = React.createRef();
-
-    componentDidMount() {
-        mapboxgl.accessToken = "pk.eyJ1IjoiZHJlYW1saWtlODgiLCJhIjoiY2tzbG02ZjY3MDQ4MzJ2bGVvbjk0aWJldyJ9.wmC1IS9Fzc-pONO8oOh6vA";
-        this.map = new mapboxgl.Map({
-            container: this.mapContainer.current,
-            style: "mapbox://styles/mapbox/streets-v9",
-            center: [37.743498, 55.643551],
-            zoom: 12
-        });
-    }
-
-    componentWillUnmount() {
-        this.map.remove();
-    }
 
     render() {
         return <>
             <div className="map-wrapper disabled">
-                <div className="map" data-testid="map" ref={this.mapContainer}/>
+                <div className="fake-map"/>
 
                 <form action="#" className="profile__form form">
                     <div className="form__title">Профиль</div>
@@ -70,14 +53,14 @@ class Profile extends React.Component {
                                 label: "CVC: ",
                                 type: "password",
                                 placeholder: "***",
-                                class: "form__field_width--small",
+                                className: "form__field_width--small",
                                 attention: true,
                             }}/>
                         </div>
                     </div>
 
                     <div className="form__btn form__btn-center">
-                        <Button text="Сохранить"/>
+                        <Button children="Сохранить"/>
                     </div>
 
                 </form>

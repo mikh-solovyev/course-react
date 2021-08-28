@@ -66,7 +66,7 @@ class Registration extends React.Component {
                             }}/>
 
                             <div className="form__btn">
-                                <Button text="Зарегистрироваться"/>
+                                <Button children="Зарегистрироваться"/>
                             </div>
 
                         </form>

@@ -34,19 +34,19 @@ class Map extends Component {
                             name: "from",
                             label: "Откуда*",
                             type: "text",
-                            class: "form__field-from"
+                            className: "form__field-from"
                         }}/>
 
                         <FormField options={{
                             name: "to",
                             label: "Куда*",
                             type: "text",
-                            class: "form__field-to"
+                            className: "form__field-to"
                         }}/>
 
                     </div>
                     <div className="form__btn">
-                        <Button class="btn_type--full" text="Вызвать такси"/>
+                        <Button className="btn_type--full" children="Вызвать такси"/>
                     </div>
                 </form>
             </div>

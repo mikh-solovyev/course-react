@@ -6,18 +6,18 @@ import "./Button.css";
 class Button extends React.Component {
 
     static propTypes = {
-        text: PropTypes.string,
-        class: PropTypes.string,
+        children: PropTypes.string,
+        className: PropTypes.string,
         type: PropTypes.string
     }
 
     static defaultProps = {
-        text: "Отправить",
+        children: "Отправить",
         type: "submit"
     }
 
     render() {
-        return <button type={this.props.type} className={`btn btn--primary ${this.props.class || ""}`}>{this.props.text}</button>
+        return <button type={this.props.type} className={`btn btn--primary ${this.props.className || ""}`}>{this.props.children}</button>
     }
 }
 

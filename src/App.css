@@ -226,6 +226,12 @@ main {
     color: #2d2d2d
 }
 
+.fake-map {
+    height: 100%;
+    background: url(./assets/map.jpg) no-repeat;
+    background-size: cover;
+}
+
 @media screen and (max-width: 480px) {
     .login-page .row, .registration-page .row {
         justify-content: center;
