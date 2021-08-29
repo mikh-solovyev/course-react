@@ -1,30 +1,20 @@
 import React from "react";
 import "./Navigation.css";
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom";
 
 class Navigation extends React.Component {
 
     static propTypes = {
-        currentPage: PropTypes.string,
         logOut: PropTypes.func,
-        changePage: PropTypes.func
     }
 
     state = {
         items: [
-            {id: 1, name: "Карта", link: "map"},
-            {id: 2, name: "Профиль", link: "profile"},
-            {id: 3, name: "Выйти", link: "login"}
+            {id: 1, name: "Карта", link: "/map"},
+            {id: 2, name: "Профиль", link: "/profile"},
         ]
     };
-
-    changePage = (link) => {
-        if(link === "login") {
-            this.unauthenticated();
-        }
-
-        this.props.changePage(link);
-    }
 
     unauthenticated = () => {
         this.props.logOut();
@@ -35,14 +25,17 @@ class Navigation extends React.Component {
             <ul className="navigation__list">
                 {this.state.items.map(({id, name, link}) => (
                     <li className="navigation__item" key={id}>
-                        <button
+                        <Link
                             data-link={link}
-                            onClick={()=> this.changePage(link)}
+                            to={link}
                             className={`navigation__link ${this.props.currentPage === link ? "active" : ""}`}>
                             {name}
-                        </button>
+                        </Link>
                     </li>
                 ))}
+                <li className="navigation__item">
+                    <a onClick={this.unauthenticated} href="/" data-link="/" className={`navigation__link ${this.props.currentPage === "/" ? "active" : ""}`}>Выйти</a>
+                </li>
             </ul>
         </nav>
     }

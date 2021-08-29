@@ -1,8 +1,9 @@
 import React, {Component} from "react";
 import mapboxgl from 'mapbox-gl';
-import {withAuth} from "../AuthContext";
+import {connect} from "react-redux";
 import Button from "../components/Button/Button";
 import FormField from "../components/FormField/FormField";
+import {logOut} from "../actions";
 
 class Map extends Component {
     map = null;
@@ -54,4 +55,7 @@ class Map extends Component {
     }
 }
 
-export const MapWithAuth = withAuth(Map);
+export const MapWithAuth = connect(
+    null,
+    {logOut}
+)(Map);

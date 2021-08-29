@@ -1,20 +1,17 @@
 import React from "react";
 import Logo from "../components/Logo/Logo";
-import {withAuth} from "../AuthContext";
+import {connect} from "react-redux";
 import PropTypes from 'prop-types';
 import Button from "../components/Button/Button";
 import FormField from "../components/FormField/FormField";
+import {logIn} from "../actions";
+import {Link} from "react-router-dom";
 
 class Registration extends React.Component {
 
-    static propTypes = {
-        changePage: PropTypes.func,
-        currentPage: PropTypes.string
-    }
-
     onFormSubmit = (e) => {
         e.preventDefault();
-        this.props.changePage("map");
+        this.props.history.push("/map");
     }
 
     render() {
@@ -23,7 +20,7 @@ class Registration extends React.Component {
                 <div className="row">
                     <div className="col">
                         <div className="logo logo_page--registration">
-                            <Logo currentPage={this.props.currentPage}/>
+                            <Logo currentPage={this.props.location.pathname}/>
                         </div>
                     </div>
                     <div className="col">
@@ -31,7 +28,7 @@ class Registration extends React.Component {
                             <div className="form__title">Регистрация</div>
                             <div className="form__subtitle">
                                 Уже зарегистрирован?
-                                <a href="#" onClick={() => this.props.changePage("login")} className="form__link">Войти</a>
+                                <Link to="/" className="form__link">Войти</Link>
                             </div>
 
                             <FormField options={{
@@ -77,4 +74,7 @@ class Registration extends React.Component {
     }
 }
 
-export const RegistrationWithAuth = withAuth(Registration);
+export const RegistrationWithAuth = connect(
+    (state) => ({isLoggedIn: state.auth.isLoggedIn}),
+    { logIn }
+)(Registration);

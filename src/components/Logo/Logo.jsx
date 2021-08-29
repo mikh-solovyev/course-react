@@ -10,7 +10,7 @@ class Logo extends React.Component {
     }
 
     getTheme() {
-        return (["login", "registration"].includes(this.props.currentPage)) ? logoWhite : logoDark;
+        return (["/", "/registration"].includes(this.props.currentPage)) ? logoWhite : logoDark;
     }
 
     render() {

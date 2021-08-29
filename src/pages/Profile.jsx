@@ -1,8 +1,9 @@
 import React from "react";
-import {withAuth} from "../AuthContext";
+import {connect} from "react-redux";
 import McLogo from "../components/McLogo/McLogo";
 import Button from "../components/Button/Button";
 import FormField from "../components/FormField/FormField";
+import {logOut} from "../actions";
 
 class Profile extends React.Component {
 
@@ -68,4 +69,7 @@ class Profile extends React.Component {
         </>
     }
 }
-export const ProfileWithAuth = withAuth(Profile);
+export const ProfileWithAuth = connect(
+    null,
+    {logOut}
+)(Profile);

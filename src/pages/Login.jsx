@@ -1,30 +1,35 @@
 import React from "react";
+import {connect} from "react-redux";
+import {authenticate} from "../actions";
 import Logo from "../components/Logo/Logo";
-import {withAuth} from "../AuthContext";
 import PropTypes from 'prop-types';
 import Button from "../components/Button/Button";
-import FormField from "../components/FormField/FormField"
+import FormField from "../components/FormField/FormField";
+import {Link} from "react-router-dom";
 
 class Login extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        if(this.props.isLoggedIn) {
+            this.props.history.push("/map");
+        }
+    }
 
     static propTypes = {
         isLoggedIn: PropTypes.bool,
         login: PropTypes.func,
-        changePage: PropTypes.func,
         currentPage: PropTypes.string
     }
 
-    changePage = (page) => {
-        this.props.changePage(page);
-    }
-
-    authenticate = async (event) => {
+    auth = async (event) => {
         event.preventDefault();
         const {login, password} = event.target;
-        await this.props.logIn(login.value, password.value);
+        await this.props.authenticate(login.value, password.value);
 
         if(this.props.isLoggedIn) {
-            this.changePage("map");
+            this.props.history.push("/map");
         }
     }
 
@@ -34,15 +39,15 @@ class Login extends React.Component {
                 <div className="row">
                     <div className="col">
                         <div className="logo logo_page--login">
-                            <Logo currentPage={this.props.currentPage}/>
+                            <Logo currentPage={this.props.location.pathname}/>
                         </div>
                     </div>
                     <div className="col">
-                        <form method="post" className="login__form form" onSubmit={this.authenticate}>
+                        <form method="post" className="login__form form" onSubmit={this.auth}>
                             <div className="form__title">Войти</div>
                             <div className="form__subtitle">
                                 Новый пользователь?
-                                <a href="#" onClick={() => this.changePage("registration")} className="form__link">Зарегистрируейтесь</a>
+                                <Link to="/registration" className="form__link">Зарегистрируейтесь</Link>
                             </div>
 
                             <FormField options={{
@@ -69,4 +74,7 @@ class Login extends React.Component {
     }
 }
 
-export const LoginWithAuth = withAuth(Login);
+export const LoginWithAuth = connect(
+    (state) => ({isLoggedIn: state.auth.isLoggedIn}),
+    { authenticate }
+)(Login);
