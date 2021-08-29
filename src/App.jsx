@@ -1,53 +1,37 @@
 import React from "react";
-import Login from "./pages/Login";
-import Registration from "./pages/Registration";
-import Map from "./pages/Map";
-import Profile from "./pages/Profile";
+import {LoginWithAuth} from "./pages/Login";
+import {RegistrationWithAuth} from "./pages/Registration";
+import {MapWithAuth} from "./pages/Map";
+import {ProfileWithAuth} from "./pages/Profile";
+import {connect} from "react-redux";
+import {logOut} from "./actions";
+import {Route, Switch} from "react-router-dom";
+import {PrivateRoute} from "./PrivateRoute";
 
 import Header from "./components/Header/Header";
-
 import './App.css';
+
 
 class App extends React.Component {
 
-  state = {
-    currentPage: "login"
-  };
-
-  changePage = (page)  => {
-    this.setState({currentPage: page})
-  }
-
-  PAGES = {
-    login: <Login changePage={this.changePage} currentPage={this.state.currentPage}/>,
-    registration: <Registration changePage={this.changePage} currentPage={this.state.currentPage}/>,
-    map: <Map/>,
-    profile: <Profile/>
-  }
-
   render() {
-    if(["login", "registration"].includes(this.state.currentPage )) {
-      return <>
-        <main>
-          <section>
-            {this.PAGES[this.state.currentPage]}
-          </section>
-        </main>
-      </>
-    } else {
-      return <>
-        <Header
-            changePage={this.changePage}
-            currentPage={this.state.currentPage}
-        />
-        <main>
-          <section>
-            {this.PAGES[this.state.currentPage]}
-          </section>
-        </main>
-      </>
-    }
+    return <>
+      {(this.props.isLoggedIn) ? <Header logOut={this.props.logOut}/> : ""}
+      <main>
+        <section>
+          <Switch>
+            <Route exact path="/" component={LoginWithAuth}/>
+            <Route exact path="/registration" component={RegistrationWithAuth}/>
+            <PrivateRoute path="/map" component={MapWithAuth}/>
+            <PrivateRoute path="/profile" component={ProfileWithAuth}/>
+          </Switch>
+        </section>
+      </main>
+    </>
   }
 }
 
-export default App;
+export default connect(
+    (state) => ({isLoggedIn: state.auth.isLoggedIn}),
+    {logOut}
+)(App);

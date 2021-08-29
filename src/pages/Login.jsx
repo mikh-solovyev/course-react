@@ -1,11 +1,36 @@
 import React from "react";
+import {connect} from "react-redux";
+import {authenticate} from "../actions";
 import Logo from "../components/Logo/Logo";
+import PropTypes from 'prop-types';
+import Button from "../components/Button/Button";
+import FormField from "../components/FormField/FormField";
+import {Link} from "react-router-dom";
 
 class Login extends React.Component {
 
-    onFormSubmit = (e) => {
-        e.preventDefault();
-        this.props.changePage("map");
+    constructor(props) {
+        super(props);
+
+        if(this.props.isLoggedIn) {
+            this.props.history.push("/map");
+        }
+    }
+
+    static propTypes = {
+        isLoggedIn: PropTypes.bool,
+        login: PropTypes.func,
+        currentPage: PropTypes.string
+    }
+
+    auth = async (event) => {
+        event.preventDefault();
+        const {login, password} = event.target;
+        await this.props.authenticate(login.value, password.value);
+
+        if(this.props.isLoggedIn) {
+            this.props.history.push("/map");
+        }
     }
 
     render() {
@@ -14,29 +39,31 @@ class Login extends React.Component {
                 <div className="row">
                     <div className="col">
                         <div className="logo logo_page--login">
-                            <Logo currentPage={this.props.currentPage}/>
+                            <Logo currentPage={this.props.location.pathname}/>
                         </div>
                     </div>
                     <div className="col">
-                        <form method="post" className="login__form form" onSubmit={(e) => this.onFormSubmit(e)}>
+                        <form method="post" className="login__form form" onSubmit={this.auth}>
                             <div className="form__title">Войти</div>
                             <div className="form__subtitle">
                                 Новый пользователь?
-                                <a href="#" onClick={() => this.props.changePage("registration")} className="form__link">Зарегистрируейтесь</a>
+                                <Link to="/registration" className="form__link">Зарегистрируейтесь</Link>
                             </div>
 
-                            <div className="form__field">
-                                <label htmlFor="name">Имя пользователя*</label>
-                                <input id="name" className="form__input" type="text" name="name"/>
-                            </div>
+                            <FormField options={{
+                                name: "login",
+                                label: "Имя пользователя*",
+                                type: "text"
+                            }}/>
 
-                            <div className="form__field">
-                                <label htmlFor="password">Пароль*</label>
-                                <input id="password" className="form__input" type="password" name="password"/>
-                            </div>
+                            <FormField options={{
+                                name: "password",
+                                label: "Пароль*",
+                                type: "password"
+                            }}/>
 
                             <div className="form__btn">
-                                <button type="submit" className="btn">Войти</button>
+                                <Button children="Войти"/>
                             </div>
 
                         </form>
@@ -47,4 +74,7 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export const LoginWithAuth = connect(
+    (state) => ({isLoggedIn: state.auth.isLoggedIn}),
+    { authenticate }
+)(Login);

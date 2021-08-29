@@ -1,12 +1,17 @@
 import React from "react";
 import Logo from "../components/Logo/Logo";
-
+import {connect} from "react-redux";
+import PropTypes from 'prop-types';
+import Button from "../components/Button/Button";
+import FormField from "../components/FormField/FormField";
+import {logIn} from "../actions";
+import {Link} from "react-router-dom";
 
 class Registration extends React.Component {
 
     onFormSubmit = (e) => {
         e.preventDefault();
-        this.props.changePage("map");
+        this.props.history.push("/map");
     }
 
     render() {
@@ -15,7 +20,7 @@ class Registration extends React.Component {
                 <div className="row">
                     <div className="col">
                         <div className="logo logo_page--registration">
-                            <Logo currentPage={this.props.currentPage}/>
+                            <Logo currentPage={this.props.location.pathname}/>
                         </div>
                     </div>
                     <div className="col">
@@ -23,38 +28,42 @@ class Registration extends React.Component {
                             <div className="form__title">Регистрация</div>
                             <div className="form__subtitle">
                                 Уже зарегистрирован?
-                                <a href="#" onClick={() => this.props.changePage("login")} className="form__link">Войти</a>
+                                <Link to="/" className="form__link">Войти</Link>
                             </div>
 
-                            <div className="form__field">
-                                <label htmlFor="email">Адрес электронной почты</label>
-                                <input id="email" className="form__input" type="email" name="email"/>
-                            </div>
+                            <FormField options={{
+                                name: "email",
+                                label: "Адрес электронной почты",
+                                type: "email"
+                            }}/>
 
                             <div className="form__field">
                                 <div className="row">
                                     <div className="col">
-                                        <div className="form__field">
-                                            <label htmlFor="name">Имя</label>
-                                            <input id="name" className="form__input" type="text" name="name"/>
-                                        </div>
+                                        <FormField options={{
+                                            name: "name",
+                                            label: "Имя",
+                                            type: "text"
+                                        }}/>
                                     </div>
                                     <div className="col">
-                                        <div className="form__field">
-                                            <label htmlFor="lastname">Фамилия</label>
-                                            <input id="lastname" className="form__input" type="text" name="lastname"/>
-                                        </div>
+                                        <FormField options={{
+                                            name: "lastname",
+                                            label: "Фамилия",
+                                            type: "text"
+                                        }}/>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="form__field">
-                                <label htmlFor="password">Пароль</label>
-                                <input id="password" className="form__input" type="password" name="password"/>
-                            </div>
+                            <FormField options={{
+                                name: "password",
+                                label: "Пароль",
+                                type: "password"
+                            }}/>
 
                             <div className="form__btn">
-                                <button type="submit" className="btn">Зарегистрироваться</button>
+                                <Button children="Зарегистрироваться"/>
                             </div>
 
                         </form>
@@ -65,4 +74,7 @@ class Registration extends React.Component {
     }
 }
 
-export default Registration;
+export const RegistrationWithAuth = connect(
+    (state) => ({isLoggedIn: state.auth.isLoggedIn}),
+    { logIn }
+)(Registration);
